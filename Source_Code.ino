@@ -13,10 +13,11 @@ byte subnet[] = { 255, 255, 255, 0 };
 EthernetServer server(80);
 String readString;
 
+int status = 0;
+
 void setup() {
   
-  //atribuição do servo
-  alfa.attach(9);
+  
   
   //iniciar ethernet shield
   Ethernet.begin(mac, ip);
@@ -25,6 +26,10 @@ void setup() {
   //coisas de serial
   Serial.begin(9600);
   Serial.println("Servidor Servo");
+
+  //atribuição do servo
+  alfa.attach(12);
+  alfa.write(180);
   
 }
 
@@ -62,30 +67,38 @@ void loop() {
 
           client.println("<H1>Controle de energia</H1>");
           
-          client.println("<a href=\"/?on\"\">Ligado</a>"); 
-          client.println("<a href=\"/?off\"\">Desligado</a>"); 
-          client.println("Status:");
+          client.println("<a href=\"/?on\"\"><button>Ligar</button></a>"); 
+          client.println("<a href=\"/?off\"\"><button>Desligar</button></a><br>"); 
+          client.println("<br>: ");
 
           
           
  
-          //delay(1);
-          
-          //client.stop();
 
               // controle do arduino
           if(readString.indexOf("?on") >0)//checks for on
           {
             alfa.write(80); // mude para o angulo de preferencia
             Serial.println("Energia Ligada");
-            client.println("Ligado");
+            client.println("Voce ligou a energia");
+            status = 1;
           }
           if(readString.indexOf("?off") >0)//checks for off
           {
             alfa.write(180); // mude para o angulo de preferencia
             Serial.println("Energia Desligada");
-            client.println("Desligado");
+            client.println("Voce desligou a energia");
+            status = 0;
           }
+
+          client.println("<br>A energia esta atualmente: ");
+          
+          if(status == 0){
+            client.println("<b>Desligada");
+          } else {
+            client.println("<b>Ligada");
+          }
+          
           
           client.println("</BODY>");
           client.println("</HTML>");
