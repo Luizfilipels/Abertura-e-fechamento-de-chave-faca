@@ -5,9 +5,9 @@
 Servo alfa;
 
 //Informações sobre IP, Gateway, mascara de rede e mac
-byte mac[] = { 0xA4, 0x28, 0x72, 0xCA, 0x55, 0x2F }; // <-- troque pelo seu MAC
-byte ip[] = { 127, 0, 0, 2 }; // <-- seu ip
-byte gateway[] = { 127, 0, 0, 1 };
+byte mac[] = { 0x70, 0xB3, 0xD5, 0x0A, 0xC6, 0x7B }; // <-- troque pelo seu MAC
+byte ip[] = { 10, 0, 0, 155 }; // <-- seu ip
+byte gateway[] = { 10, 0, 0, 1 };
 byte subnet[] = { 255, 255, 255, 0 };
 
 EthernetServer server(80);
@@ -64,26 +64,35 @@ void loop() {
           
           client.println("<a href=\"/?on\"\">Ligado</a>"); 
           client.println("<a href=\"/?off\"\">Desligado</a>"); 
+          client.println("Status:");
 
-          client.println("</BODY>");
-          client.println("</HTML>");
- 
-          delay(1);
           
-          client.stop();
+          
+ 
+          //delay(1);
+          
+          //client.stop();
 
               // controle do arduino
           if(readString.indexOf("?on") >0)//checks for on
           {
             alfa.write(80); // mude para o angulo de preferencia
             Serial.println("Energia Ligada");
+            client.println("Ligado");
           }
           if(readString.indexOf("?off") >0)//checks for off
           {
             alfa.write(180); // mude para o angulo de preferencia
             Serial.println("Energia Desligada");
+            client.println("Desligado");
           }
           
+          client.println("</BODY>");
+          client.println("</HTML>");
+          
+          delay(1);
+          
+          client.stop();
           readString="";
 
         }
