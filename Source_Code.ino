@@ -55,7 +55,7 @@ void loop() {
           ///////////////
           Serial.println(readString); 
 
-      client.println("HTTP/1.1 200 OK"); 
+          client.println("HTTP/1.1 200 OK"); 
           client.println("Content-Type: text/html");
           client.println();
 
