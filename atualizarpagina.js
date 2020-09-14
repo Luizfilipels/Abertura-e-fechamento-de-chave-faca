@@ -1,5 +1,4 @@
-$(document).ready(function(){
-setInterval(function(){
-      $("#volts").load(window.location.href + " #volts" );
-}, 3000);
-});
+function updateDiv()
+{ 
+    $( "#here" ).load(window.location.href + " #here" );
+}
