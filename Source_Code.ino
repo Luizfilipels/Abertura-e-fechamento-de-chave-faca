@@ -72,7 +72,7 @@ void loop() {
           client.println("<HTML>");
           client.println("<HEAD>");
           client.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>");
-          client.println("<script src='http://portalink.net.br/gerencia/atualizar2.js'</script>");
+          //client.println("<script src='https://raw.githubusercontent.com/Luizfilipels/Abertura-e-fechamento-de-chave-faca/master/atualizarpagina.js'</script>");
           client.println("<TITLE>Controle de energia Arduino</TITLE>");
           client.println("</HEAD>");
           client.println("<BODY>");
@@ -95,9 +95,17 @@ void loop() {
           
           client.println("________________________________");
 
+          //scripts e sla oq eu to fazendo
+          client.println("<script>");
+          client.println("$(document).ready(function(){");
+          client.println("setInterval(function(){");
+          client.println("$('#here').load(window.location.href + ' #here' );");
+          client.println("}, 3000);");
+          client.println("});");
+          client.println("</script>");
+          //chupa, eu consegui :)
           
-          
-          client.println("<div id='setTime'>");
+          client.println("<div id='here'>");
           client.println("<br>");
           //voltimentro
           client.println("<br>Voltimentro: ");
@@ -111,7 +119,7 @@ void loop() {
           client.println("<a href=\"/?on\"\"><button>Ligar</button></a>"); 
           client.println("<a href=\"/?off\"\"><button>Desligar</button></a><br>"); 
           client.println("<br> ");
-
+          client.println("");
           
           
  
