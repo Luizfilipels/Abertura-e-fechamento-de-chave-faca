@@ -1,5 +1,3 @@
-$(document).ready(function(){
-setInterval(function(){
-      $("#here").load(window.location.href + " #here" );
-}, 3000);
-});
+setTimeout(function(){
+   window.location.reload(1);
+}, 5000);
