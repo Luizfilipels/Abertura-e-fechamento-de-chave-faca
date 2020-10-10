@@ -1,4 +1,4 @@
 function updateDiv()
 { 
-    $( "#here" ).load(window.location.href + " #here" );
-}
+        $( "#volts" ).load(window.location.href + " #volts" );
+} 
