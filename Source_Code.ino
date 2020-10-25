@@ -7,8 +7,8 @@ Servo alfa;
 
 //Informações sobre IP, Gateway, mascara de rede e mac
 byte mac[] = { 0x70, 0xB3, 0xD5, 0x0A, 0xC6, 0x7B }; // <-- troque pelo seu MAC
-byte ip[] = { 192, 168, 1, 155 }; // <-- seu ip
-byte gateway[] = { 192, 168, 1, 1 };
+byte ip[] = { 10, 0, 0, 165 }; // <-- seu ip
+byte gateway[] = { 10, 0, 0, 1 }; // <-- seu gateway
 byte subnet[] = { 255, 255, 255, 0 };
 
 EthernetServer server(80);
@@ -19,7 +19,7 @@ int status = 1;
 float valorTensaoDC;
 int amostragem = 1000;
 float mediaTotalTensaoDC = 0;
-float valorFinalTensaoDC = 0;
+float TensaoDC = 0;
 //valor resistor
 float voltsporUnidade = 0.004700000;
 float R1 = 30000.0;
@@ -87,30 +87,43 @@ void loop() {
               
             }
           
-          valorFinalTensaoDC = mediaTotalTensaoDC / amostragem;
+          TensaoDC = mediaTotalTensaoDC / amostragem;
             Serial.print("Valor: ");
-            Serial.print(valorFinalTensaoDC);
+            //Serial.print(valorFinalTensaoDC);
             Serial.print(" V");
           
           
           client.println("________________________________");
 
-          //scripts e sla oq eu to fazendo
+          //script para atualizar a div (obrigado stackoverflow)
           client.println("<script>");
           client.println("$(document).ready(function(){");
           client.println("setInterval(function(){");
           client.println("$('#here').load(window.location.href + ' #here' );");
-          client.println("}, 3000);");
+          client.println("}, 1000);");
           client.println("});");
           client.println("</script>");
-          //chupa, eu consegui :)
+          //-------------------------------------
           
           client.println("<div id='here'>");
           client.println("<br>");
           //voltimentro
           client.println("<br>Voltimentro: ");
-          client.println(valorFinalTensaoDC);
+          client.println("<b>");
+          client.println(TensaoDC);
+          client.println("</b>");
           client.println(" V");
+          
+          // status de leitura
+          if (TensaoDC < 10.00) {
+             client.println("<b><p style='color:#B91E1E';>Inoperante</p></b>");
+          }
+          else if (TensaoDC >= 10.01 && TensaoDC <= 11.99) {
+            client.println("<b><p style='color:#A2AC07';>Alerta</p></b>");
+          }
+          else {
+            client.println("<b><p style='color:#25B91E';>OK</p></b>");
+          }
           client.println("</div>");
           client.println("<br>________________________________");
           client.println("<br>");
